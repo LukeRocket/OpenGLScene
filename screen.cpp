@@ -6,23 +6,13 @@ void Screen::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	// priority to escape event
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
-	} else {	
-		// flashing background color
-		if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) { // change color 		
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		} else {
-			glClearColor(.01f, .01f, .01f, 1.0f);
-		}	
-
-		// camera movements
-		// UP
+	} else {					
 		Screen * currentScreen = (Screen *)glfwGetWindowUserPointer(window);
-
 		Camera* activeCamera = currentScreen->activeScene->cameras[currentScreen->activeScene->activeCamIndex];
 
 		float upValue = 0.1f;
 		if (action == GLFW_REPEAT || action == GLFW_PRESS) {
-
+			// camera movements
 			if (key == GLFW_KEY_W) { // change color wwwwwwww					
 				activeCamera->moveUP(upValue);
 			}
@@ -39,6 +29,17 @@ void Screen::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			// LEFT
 			if (key == GLFW_KEY_A) {
 				activeCamera->moveRIGHT(-rightValue);
+			}
+
+			// flashing background color
+			if (key == GLFW_KEY_ENTER) { // change color 		
+				glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			} else {
+				glClearColor(.01f, .01f, .01f, 1.0f);
+			}
+
+			if (key == GLFW_KEY_SPACE) {
+				activeCamera->returnToStartConfig();
 			}
 		}
 		activeCamera->setViewMatrix();
@@ -57,8 +58,8 @@ void Screen::cursorPositionCallback(GLFWwindow* window, double xPos, double yPos
 			currentScreen->firstMouseMove = false;
 		}
 
-		activeCamera->moveUP(.1f*(-(float)yPos + currentScreen->lastCursorPosition.y));
-		activeCamera->moveRIGHT(.1f*((float)xPos - currentScreen->lastCursorPosition.x));
+		activeCamera->moveUP(.01f*(-(float)yPos + currentScreen->lastCursorPosition.y));
+		activeCamera->moveRIGHT(.01f*((float)xPos - currentScreen->lastCursorPosition.x));
 		currentScreen->lastCursorPosition.x = (float)xPos;
 		currentScreen->lastCursorPosition.y = (float)yPos;
 	} else {
@@ -89,7 +90,7 @@ void Screen::cursorPositionCallback(GLFWwindow* window, double xPos, double yPos
 void Screen::scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 	Screen* currentScreen = (Screen*)glfwGetWindowUserPointer(window);
 	Camera* activeCamera = currentScreen->activeScene->cameras[currentScreen->activeScene->activeCamIndex];
-	activeCamera->moveFORWARD(yOffset);
+	activeCamera->moveFORWARD(0.1f*yOffset);
 	activeCamera->setViewMatrix();
 }
 

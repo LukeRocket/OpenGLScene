@@ -5,7 +5,7 @@ void Scene::update(){
 	for (int i = 0; i < this->objectCollection.size(); i++) {
 		for (Mesh &m : this->objectCollection[i]->meshes){
 			//m.transform(glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(0.5f, 0.0f, 1.0f), (float)glfwGetTime(), glm::vec3(10.0f, 10.0f, 10.0f));
-			m.transform(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.0f, 1.0f), (float)glfwGetTime(), glm::vec3(.8f, .8f, .8f));
+			m.transform(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.0f, 1.0f), (float)0.0f, glm::vec3(.8f, .8f, .8f));
 		}		
 	}
 
