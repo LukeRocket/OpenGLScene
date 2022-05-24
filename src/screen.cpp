@@ -14,11 +14,11 @@ void Screen::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 		if (action == GLFW_REPEAT || action == GLFW_PRESS) {
 			// camera movements
 			if (key == GLFW_KEY_W) { // change color wwwwwwww					
-				activeCamera->moveUP(upValue);
+				activeCamera->moveFORWARD(upValue);
 			}
 			// DOWN
 			if (key == GLFW_KEY_S) {
-				activeCamera->moveUP(-upValue);
+				activeCamera->moveFORWARD(-upValue);
 			}
 
 			// RIGHT

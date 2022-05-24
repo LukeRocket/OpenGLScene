@@ -40,5 +40,5 @@ public:
 		stbi_image_free(data);
 	}
 
-	unsigned char* loadImage(std::string path, int & width, int & height, int & channels);		
+	unsigned char* loadImage(std::string path, int & width, int & height, int & channels, bool flip = true);		
 };

@@ -5,8 +5,8 @@ void Camera::moveUP(float upValue) {
 	this->rotate(this->yaw, this->pitch, this->roll);
 }
 
-void Camera::moveFORWARD(float upValue) {	
-	this->cameraPosVector += upValue*(this->centerVector - this->cameraPosVector);
+void Camera::moveFORWARD(float forwardValue) {
+	this->cameraPosVector += forwardValue * (this->centerVector - this->cameraPosVector);
 	this->rotate(this->yaw, this->pitch, this->roll);
 }
 
