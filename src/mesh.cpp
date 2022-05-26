@@ -68,5 +68,6 @@ void Mesh::draw(ShaderProgram* shaderProg, Camera* c, std::vector<std::vector<gl
 
 	glBindVertexArray(this->VAO);
 	glDrawElements(GL_TRIANGLES, this->nVertices, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_POINTS, this->nVertices, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);	
 }

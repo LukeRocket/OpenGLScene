@@ -42,6 +42,12 @@ void run() {
 				{"path", "./shaders/fragment_shader.glsl"},
 				{"errorLog", "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"}
 			}
+		}, 
+		{GL_GEOMETRY_SHADER,
+			{
+				{"path", "./shaders/geometry_shader.glsl"},
+				{"errorLog", "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\n"}
+			}
 		}
 	};
 
@@ -49,6 +55,8 @@ void run() {
 	
 	paths[GL_VERTEX_SHADER]["path"] = "./shaders/skybox_vertex.glsl";
 	paths[GL_FRAGMENT_SHADER]["path"] = "./shaders/skybox_fragment.glsl";
+	paths.erase(GL_GEOMETRY_SHADER);
+
 
 	ShaderProgram* skyboxProg = new ShaderProgram(paths);
 
