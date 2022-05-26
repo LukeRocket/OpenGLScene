@@ -1,4 +1,5 @@
 #include "object.h"
+#include <assert.h>
 
 void Object::draw(Camera* c, std::vector<std::vector<glm::vec3>> lightsData) {
 	// temp solution
@@ -7,23 +8,20 @@ void Object::draw(Camera* c, std::vector<std::vector<glm::vec3>> lightsData) {
 	}
 }
 
-void Object::load(std::string path) {
+void Object::load(const std::string & path) {
 	Assimp::Importer importer;
 	const aiScene * scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
-
-	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||
-		!scene->mRootNode)
+	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||!scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		return;
 	}	
 
 	// get root node
-	aiNode * rootNode = scene->mRootNode;
-	this->getNodeMeshes(rootNode, scene);
+	this->getNodeMeshes(scene->mRootNode, scene);
 }
 
-std::vector<Texture> Object::convertAssimpToTexture(aiMaterial * material, aiTextureType type) {
+std::vector<Texture> Object::convertAssimpToTexture(aiMaterial * material, const aiTextureType & type) {
 	std::vector<Texture> textures = {};
 
 	for (unsigned int i = 0; i < material->GetTextureCount(type); i++) {
@@ -42,7 +40,7 @@ std::vector<Texture> Object::convertAssimpToTexture(aiMaterial * material, aiTex
 
 		if (!skip) {
 			// load image
-			Texture t = Texture(path);
+			Texture t = Texture(path.c_str());
 			textures.push_back(t);
 			loadedTextures[path] = t;
 		}					

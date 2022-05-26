@@ -6,6 +6,7 @@
 #include "variables.h"
 #include "camera.h"
 #include "texture.h"
+#include "skybox.h"
 
 // Vertex 
 struct Vertex {
@@ -58,5 +59,5 @@ public:
 	}*/
 
 	void transform(glm::vec3 translation, glm::vec3 rotationAxes, float angle, glm::vec3 scale);
-	void draw(ShaderProgram* shaderProg, Camera * c, std::vector<std::vector<glm::vec3>> lightsData);
+	void draw(ShaderProgram* shaderProg, Camera * c, std::vector<std::vector<glm::vec3>> lightsData, Skybox * skybox = nullptr);
 };

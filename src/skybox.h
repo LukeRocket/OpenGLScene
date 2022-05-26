@@ -12,11 +12,7 @@ public:
 	unsigned int VBO;
 	ShaderProgram* shaderProgram;
 
-	Skybox(CubeMap * map, ShaderProgram * shaderProg) : cMap(map), shaderProgram(shaderProg) {
-		updateVertices(100.0f);
-	}
-
+	Skybox(CubeMap* map, ShaderProgram* shaderProg, const float& cubeSideMultiplier);
+	
 	void draw(Camera* c);
-
-	void updateVertices(float cubeSideMultiplier);
 };

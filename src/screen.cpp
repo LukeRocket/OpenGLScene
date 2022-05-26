@@ -13,22 +13,24 @@ void Screen::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 		float upValue = 0.1f;
 		if (action == GLFW_REPEAT || action == GLFW_PRESS) {
 			// camera movements
-			if (key == GLFW_KEY_W) { // change color wwwwwwww					
+			if (key == GLFW_KEY_W) {
 				activeCamera->moveFORWARD(upValue);
 			}
 			// DOWN
 			if (key == GLFW_KEY_S) {
-				activeCamera->moveFORWARD(-upValue);
+				upValue *= -1;
+				activeCamera->moveFORWARD(upValue);
 			}
 
 			// RIGHT
 			float rightValue = 0.1f;
-			if (key == GLFW_KEY_D) { // change color 		
+			if (key == GLFW_KEY_D) {
 				activeCamera->moveRIGHT(rightValue);
 			}
 			// LEFT
 			if (key == GLFW_KEY_A) {
-				activeCamera->moveRIGHT(-rightValue);
+				rightValue *= -1;
+				activeCamera->moveRIGHT(rightValue);
 			}
 
 			// flashing background color
@@ -57,9 +59,10 @@ void Screen::cursorPositionCallback(GLFWwindow* window, double xPos, double yPos
 			currentScreen->lastCursorPosition.y = (float)yPos;
 			currentScreen->firstMouseMove = false;
 		}
-
-		activeCamera->moveUP(.01f*(-(float)yPos + currentScreen->lastCursorPosition.y));
-		activeCamera->moveRIGHT(.01f*((float)xPos - currentScreen->lastCursorPosition.x));
+		float upValue = .01f * (-(float)yPos + currentScreen->lastCursorPosition.y);
+		activeCamera->moveUP(upValue);
+		float rightValue = .01f * ((float)xPos - currentScreen->lastCursorPosition.x);
+		activeCamera->moveRIGHT(rightValue);
 		currentScreen->lastCursorPosition.x = (float)xPos;
 		currentScreen->lastCursorPosition.y = (float)yPos;
 	} else {
@@ -79,7 +82,8 @@ void Screen::cursorPositionCallback(GLFWwindow* window, double xPos, double yPos
 				activeCamera->pitch = -89.0f;
 			}
 
-			activeCamera->rotate(activeCamera->yaw, activeCamera->pitch, 0.0f);
+			float roll = 0.0f;
+			activeCamera->rotate(activeCamera->yaw, activeCamera->pitch, roll);
 			currentScreen->lastCursorPosition.x = (float)xPos;
 			currentScreen->lastCursorPosition.y = (float)yPos;
 		}
@@ -90,7 +94,8 @@ void Screen::cursorPositionCallback(GLFWwindow* window, double xPos, double yPos
 void Screen::scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 	Screen* currentScreen = (Screen*)glfwGetWindowUserPointer(window);
 	Camera* activeCamera = currentScreen->activeScene->cameras[currentScreen->activeScene->activeCamIndex];
-	activeCamera->moveFORWARD(0.1f*yOffset);
+	float yOffsetsimple = (float)yOffset * 0.1f;
+	activeCamera->moveFORWARD(yOffsetsimple);
 	activeCamera->setViewMatrix();
 }
 

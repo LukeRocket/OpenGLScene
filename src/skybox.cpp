@@ -1,7 +1,9 @@
 #include "skybox.h"
 
-void Skybox::updateVertices(float cubeSideMultiplier) {
-
+Skybox::Skybox(CubeMap* map, ShaderProgram* shaderProg, const float & cubeSideMultiplier) {
+    cMap = map;
+    shaderProgram = shaderProg;
+    
     float skyboxVertices[] = {
         // positions          
         -cubeSideMultiplier,  cubeSideMultiplier, -cubeSideMultiplier,
@@ -59,9 +61,10 @@ void Skybox::updateVertices(float cubeSideMultiplier) {
 
 
 void Skybox::draw(Camera* c) {
-	shaderProgram->sendMatrixUniforms(true,
+    shaderProgram->use();
+	/*shaderProgram->sendMatrixUniforms(
 		std::unordered_map<std::string, glm::mat4>{ { "view", c->getViewMatrix()},
-		                            				{ "project", c->getProjMatrix() }}, glUniformMatrix4fv, 1);	
+		                            				{ "project", c->getProjMatrix() }}, glUniformMatrix4fv, 1);	*/
 
 	glDepthFunc(GL_LEQUAL);
 	glBindVertexArray(VAO);

@@ -18,21 +18,21 @@ class Object
 public:
 	std::unordered_map<std::string, Texture> loadedTextures = {};
 	std::string objDirectory;
+	glm::vec3 m_location;
 
-
-	Object(std::string path, ShaderProgram *shaderProg) : shaderProgram(shaderProg){
+	Object(const std::string & path, ShaderProgram *shaderProg, glm::vec3 location) : shaderProgram(shaderProg), m_location(location) {
 		this->objDirectory = path.substr(0, path.find_last_of('/') + 1);
 		this->load(path);		
-	}
-	
+	}	
+
 	std::vector<Mesh> meshes;
 	ShaderProgram* shaderProgram = nullptr;
 	std::vector<Texture*> textures = {};
 
 	void draw(Camera* c, std::vector<std::vector<glm::vec3>> lightsData = {});
-	void load(std::string path);
+	void load(const std::string &path);
 	void getNodeMeshes(aiNode * node, const aiScene * scene);
 	//converters
 	Mesh convertAssimpToMesh(aiMesh* mesh, aiMaterial ** sceneMeterials);
-	std::vector<Texture> convertAssimpToTexture(aiMaterial* material, aiTextureType type);
+	std::vector<Texture> convertAssimpToTexture(aiMaterial* material, const aiTextureType & type);
 };

@@ -8,10 +8,9 @@ class Texture
 public:
 	unsigned int id;
 	int w, h;
-
 	Texture() {}
 
-	Texture(unsigned char * image_data, int width, int height, int channels = 3): w(width), h(height) {
+	Texture(unsigned char * image_data, int & width, int &height, int & channels) : w(width), h(height) {
 		// generate texture
 		glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
@@ -32,7 +31,7 @@ public:
 		}	
 	}
 
-	Texture(std::string path) {
+	Texture(const char * path) {
 		int width, height, channels;
 		unsigned char* data = loadImage(path, width, height, channels);
 		*this = Texture::Texture(data, width, height, channels);
@@ -40,5 +39,5 @@ public:
 		stbi_image_free(data);
 	}
 
-	unsigned char* loadImage(std::string path, int & width, int & height, int & channels, bool flip = true);		
+	unsigned char* loadImage(const char *path, int & width, int & height, int & channels, bool flip = true);		
 };

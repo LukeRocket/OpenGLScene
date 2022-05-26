@@ -2,10 +2,10 @@
 
 void Scene::update(){
 
-	//// apply transformations
+	//// Update
 	for (int i = 0; i < this->objectCollection.size(); i++) {
 		for (Mesh &m : this->objectCollection[i]->meshes){
-			m.transform(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.0f, 1.0f), (float)glfwGetTime(), glm::vec3(.8f, .8f, .8f));
+			m.transform(objectCollection[i]->m_location, glm::vec3(0.5f, 0.0f, 1.0f), (float)glfwGetTime(), glm::vec3(.8f, .8f, .8f));
 		}		
 	}
 
@@ -19,9 +19,10 @@ void Scene::update(){
 		lightsData[1].push_back(this->lightCollection[i]->color);
 	}
 
-	//// send to shader
+	//// Render 
+	int counter = 1;
 	for (Object* obj : this->objectCollection) {
-		obj->draw(this->cameras[this->activeCamIndex], lightsData);
+		obj->draw(this->cameras[this->activeCamIndex], lightsData);	
 	}
 
 	if (lightsVisible) {
@@ -32,10 +33,11 @@ void Scene::update(){
 		}
 	}
 
-	skybox->draw(cameras[activeCamIndex]);
+	if (skybox) 
+		skybox->draw(cameras[activeCamIndex]);
 }
 
 
-void Scene::setActiveCamera(unsigned int index) {
+void Scene::setActiveCameraIndex(unsigned int index) {
 	activeCamIndex = index;
 }

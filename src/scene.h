@@ -15,9 +15,9 @@ public:
 	bool lightsVisible;
 	Skybox* skybox;
 
-	Scene(std::vector<Camera*> cams, std::vector<Object*> objs = {}, std::vector<Light*> lights = {}, Skybox * skBox = nullptr, bool lightsVisible = false) :
+	Scene(const std::vector<Camera*> cams, std::vector<Object*>& objs, const std::vector<Light*> &lights, Skybox * skBox = nullptr, bool lightsVisible = false) :
 	cameras(cams), objectCollection(objs), lightCollection(lights), lightsVisible(lightsVisible), skybox(skBox) {
-		this->setActiveCamera(0);
+		this->setActiveCameraIndex(0);
 	}
 
 	~Scene() {
@@ -29,8 +29,10 @@ public:
 			delete light;
 		}
 
-		delete skybox->cMap;
-		delete skybox;
+		if (skybox) {
+			delete skybox->cMap;
+			delete skybox;
+		}		
 	}
 
 	// executed each frame
@@ -39,5 +41,5 @@ public:
 	std::vector<Object *> objectCollection;
 	std::vector<Light *> lightCollection;	
 
-	void setActiveCamera(unsigned int index);
+	void setActiveCameraIndex(unsigned int index);
  };
